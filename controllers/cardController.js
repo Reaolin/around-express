@@ -1,12 +1,12 @@
-/* eslint-disable quotes */
-const path = require("path");
+
+const path = require('path');
 const { getFileContent } = require("../helpers/getFileContent");
 
-const cardsPath = path.join(__dirname, "..", "data", "cards.json");
+const cardPath = path.join(__dirname, "..", "data", "cards.json");
 
 function getCards(req, res) {
-  return getFileContent(cardsPath).then((users) => {
-    res.status(200).send(users);
+  return getFileContent(cardPath).then((cards) => {
+    res.status(200).send(cards);
   });
 }
 
