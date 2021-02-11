@@ -10,7 +10,7 @@ const path = require("path");
 const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", userRouter);
+app.use("/users", userRouter);
 app.use("/cards", cardRouter);
 
 app.get("*", (req, res) => {

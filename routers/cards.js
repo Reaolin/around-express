@@ -4,6 +4,6 @@ const cardRouter = express.Router();
 const { getCards } = require('../controllers/cardController');
 
 
-cardRouter.get('/cards', getCards);
+cardRouter.get('/', getCards);
 
 module.exports = cardRouter;
