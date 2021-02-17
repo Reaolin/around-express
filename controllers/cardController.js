@@ -11,8 +11,8 @@ function getCards(req, res) {
 
 const createCard = (req, res) => {
   console.log(req.user._id);
-  const { name, link } = req.body;
- Card.create({ name, link, owner: req.user_id})
+ const { name, link } = req.body;
+ Card.create({ name, link, owner: req.user._id})
   .then((card) => res.status(200).send(card))
   .catch((err) => {
     if (err.name === 'ValidationError'){
@@ -27,7 +27,7 @@ const createCard = (req, res) => {
     Card.findByIdAndRemove(req.params.cardId)
     .then((card) => {
       if(!card) {
-        res.status(400).send({ message: 'This is not the card you are looking for'})
+        res.status(404).send({ message: 'This is not the card you are looking for'})
       }
       res.status(200).send({ data: card })
     })

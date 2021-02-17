@@ -9,14 +9,17 @@ function getUser(req, res) {
 }
 
 function getOneUser(req, res) {
-  return User.find({ id: req.params.id })
+  console.log(req.params._id);
+ return User.findById(req.params._id)
+
     .then((user) => {
-      if (user) {
-        return res.status(200).send(user);
-      }
-      return res
+      if (!user) {
+        return res
         .status(404)
         .send({ message: "This is not the user you are looking for" });
+
+      }
+      return res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === "CastError") {
@@ -30,7 +33,7 @@ function getOneUser(req, res) {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   console.log(req.body);
- return User.create({ name, about, avatar })
+  User.create({ name, about, avatar })
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === "ValidationError") {
@@ -41,16 +44,16 @@ const createUser = (req, res) => {
 };
 
 
-const updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.id, {
+/*const updateUser = (req, res) => {
+  User.findByIdAndUpdate(req.params._id, {
     name: req.params.name,
     about: req.params.about,
-    avatar: req.params.avatar,
+    avatar: req.params.avatar
   })
     .then((user) => {
       if (!user) {
         res
-          .status(400)
+          .status(404)
           .send({ message: "This is not the user you are looking for" });
       }
       res.status(200).send({ data: user });
@@ -62,10 +65,10 @@ const updateUser = (req, res) => {
       res.status(500).send(err);
     });
 };
-
+*/
 module.exports = {
   getUser,
   getOneUser,
-  createUser,
-  updateUser,
+  createUser
+
 };

@@ -9,7 +9,6 @@ const helmet = require('helmet');
 const { PORT = 3000 } = process.env;
 
 const app = express();
-
 app.use(bodyParser.json());
 app.use(helmet());
 
@@ -17,7 +16,8 @@ app.use(helmet());
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
 });
 
 app.use((req, res, next) => {
@@ -27,10 +27,11 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // connecting to routes
+
 app.use("/users", userRouter);
 app.use("/cards", cardRouter);
+
 
 //page not found
 app.get("*", (req, res) => {
