@@ -30,7 +30,7 @@ function getOneUser(req, res) {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   console.log(req.body);
-  User.create({ name, about, avatar })
+ return User.create({ name, about, avatar })
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === "ValidationError") {
@@ -40,23 +40,7 @@ const createUser = (req, res) => {
     });
 };
 
-/*const createUser = (req, res) => {
-  console.log(req.body, 'this is the body');
-  return User.countDocuments({})
-  .then( id => {
-    return User.create({...req.body, id})
-  })
-  .then(user => {
-    res.status(200).send(user)
-  })
-  .catch((err) => {
-    if (err.name === 'ValidationError'){
-      res.status(400).send({ message: err });
-    }
-    res.status(500).send({ message: err });
-  })
-}
-*/
+
 const updateUser = (req, res) => {
   User.findByIdAndUpdate(req.params.id, {
     name: req.params.name,
