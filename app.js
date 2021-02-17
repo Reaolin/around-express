@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '5d8b8592978f8bd833ca8133' // paste the _id of the test user created in the previous step
+    _id: '602d28aa4efb4a5136e94558' // paste the _id of the test user created in the previous step
   };
 
   next();
