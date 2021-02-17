@@ -2,7 +2,7 @@
 const Card = require("../models/card");
 
 function getCards(req, res) {
-  return Card.find({})
+  Card.find({})
   .then((cards) => {
     res.status(200).send(cards);
   })
@@ -10,8 +10,9 @@ function getCards(req, res) {
 }
 
 const createCard = (req, res) => {
+  console.log(req.user._id);
   const { name, link } = req.body;
-  Card.create({ name, link, owner: req.user_id})
+ Card.create({ name, link, owner: req.user_id})
   .then((card) => res.status(200).send(card))
   .catch((err) => {
     if (err.name === 'ValidationError'){
@@ -37,8 +38,9 @@ const createCard = (req, res) => {
     })
   }
 
+
 module.exports = {
   getCards,
-  createCard,
-  deleteCard
+  deleteCard,
+  createCard
 };

@@ -24,7 +24,6 @@ app.use((req, res, next) => {
   req.user = {
     _id: '602d28aa4efb4a5136e94558' // paste the _id of the test user created in the previous step
   };
-
   next();
 });
 
