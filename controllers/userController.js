@@ -1,25 +1,9 @@
 const User = require("../models/user");
 
-function getUser(req, res) {
-  return User.find({})
+function getUsers(req, res) {
+  User.find({})
     .then((users) => {
       res.status(200).send(users);
-    })
-    .catch((err) => res.status(400).send(err));
-}
-
-function getOneUser(req, res) {
-  console.log(req.params._id);
- return User.findById(req.params._id)
-
-    .then((user) => {
-      if (!user) {
-        return res
-        .status(404)
-        .send({ message: "This is not the user you are looking for" });
-
-      }
-      return res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === "CastError") {
@@ -30,9 +14,27 @@ function getOneUser(req, res) {
     });
 }
 
+function getOneUser(req, res) {
+  User.findById(req.params._id)
+    .then((user) => {
+      if (!user) {
+        res
+          .status(404)
+          .send({ message: "This is not the user you are looking for" });
+      }
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        res.status(400).send({message: "This is not the user you are looking for"} );
+      } else {
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
+}
+
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
-  console.log(req.body);
   User.create({ name, about, avatar })
     .then((user) => res.status(200).send(user))
     .catch((err) => {
@@ -42,7 +44,6 @@ const createUser = (req, res) => {
       res.status(500).send({ message: err });
     });
 };
-
 
 /*const updateUser = (req, res) => {
   User.findByIdAndUpdate(req.params._id, {
@@ -67,8 +68,7 @@ const createUser = (req, res) => {
 };
 */
 module.exports = {
-  getUser,
+  getUsers,
   getOneUser,
-  createUser
-
+  createUser,
 };
